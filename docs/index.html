@@ -1,4 +1,64 @@
 <html lang="ja">
+<script>
+    const params = new URLSearchParams(location.search);
+    const viewType = params.get('first_view_msg');
+    const s = window.document.createElement('script')
+    const dataToken = '0a086e76-880b-4d9a-a087-6ce40e0814b9'
+    s.id = 'bedore-webagent'
+    s.src = 'https://stg-webagent.bedore.jp/init.js'
+    s.setAttribute('charset', 'utf-8')
+    s.setAttribute('data-token', dataToken)
+    if (viewType === 'msglog') {
+        s.setAttribute('data-config-index', '1')
+        const items = window.localStorage.getItem(`bedoreWebagentEvents-${dataToken}`)
+        window.localStorage.removeItem(`bedoreWebagentEvents-${dataToken}`)
+        if (items != null) {
+            window.localStorage.setItem(`bedoreWebagentEvents-${dataToken}-bk`, items)
+        }
+    } else if (viewType === 'normal') {
+        s.setAttribute('data-config-index', '0')
+        const items = window.localStorage.getItem(`bedoreWebagentEvents-${dataToken}`)
+        const itemsBk = window.localStorage.getItem(`bedoreWebagentEvents-${dataToken}-bk`)
+        console.log(items)
+        console.log(itemsBk)
+        const list = []
+        if (itemsBk != null) {
+            const jsonItems = JSON.parse(itemsBk)
+            console.log(jsonItems)
+            for (const item of jsonItems) {
+                console.log(item)
+                list.push(item)
+            }
+        }
+        if (items != null) {
+            const jsonItems = JSON.parse(items)
+            console.log(jsonItems)
+            for (const item of jsonItems) {
+                console.log(item)
+                list.push(item)
+            }
+        }
+        console.log(list)
+        if (list.length > 0) {
+            window.localStorage.setItem(`bedoreWebagentEvents-${dataToken}`, JSON.stringify(list))
+            window.localStorage.removeItem(`bedoreWebagentEvents-${dataToken}-bk`)
+        }
+    } else if (viewType === 'actionFlowAndSlot') {
+        s.setAttribute('data-config-index', '2')
+        const slots = [
+            {
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                context_name: 'first_view_msg',
+                value: viewType,
+            },
+        ]
+        s.setAttribute('data-slots', JSON.stringify(slots))
+    } else {
+        s.setAttribute('data-config-index', '2')
+    }
+    console.log(s)
+    window.document.head.appendChild(s)
+</script>
 <body>
 ボットの動作確認用のページ
 </body>
