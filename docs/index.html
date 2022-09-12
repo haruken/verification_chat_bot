@@ -2,6 +2,7 @@
 <script>
     const params = new URLSearchParams(location.search);
     const viewType = params.get('first_view_msg');
+    const reloaded = params.get('reloaded');
     const s = window.document.createElement('script')
     const dataToken = '0a086e76-880b-4d9a-a087-6ce40e0814b9'
     s.id = 'bedore-webagent'
@@ -14,6 +15,9 @@
         window.localStorage.removeItem(`bedoreWebagentEvents-${dataToken}`)
         if (items != null) {
             window.localStorage.setItem(`bedoreWebagentEvents-${dataToken}-bk`, items)
+        }
+        if (reloaded !== 'true') {
+            location.replace(location.href + '&reloaded=true')
         }
     } else if (viewType === 'normal') {
         s.setAttribute('data-config-index', '0')
