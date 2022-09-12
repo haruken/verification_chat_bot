@@ -18,7 +18,9 @@
         }
         if (reloaded !== 'true') {
             window.document.head.appendChild(s)
-            location.replace(location.href + '&reloaded=true')
+            setTimeout(function(){
+                window.location.href = location.href + '&reloaded=true'
+            }, 5*1000)
         }
     } else if (viewType === 'normal') {
         s.setAttribute('data-config-index', '0')
