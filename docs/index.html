@@ -17,6 +17,7 @@
             window.localStorage.setItem(`bedoreWebagentEvents-${dataToken}-bk`, items)
         }
         if (reloaded !== 'true') {
+            window.document.head.appendChild(s)
             location.replace(location.href + '&reloaded=true')
         }
     } else if (viewType === 'normal') {
